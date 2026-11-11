@@ -141,3 +141,16 @@ round(100 * mean(complete.cases(airquality)), 1)
 ```
 
 Le tableau compte 153 jours et 6 variables. Seules `Ozone` (37 valeurs manquantes) et `Solar.R` (7) ont des `NA`. `r round(100 * mean(complete.cases(airquality)), 1)` % des jours sont complets (111 sur 153).
+
+## B2
+
+```{r b2}
+aq <- airquality
+aq$TempC <- round((aq$Temp - 32) * 5 / 9, 1)
+aq$Mois <- factor(aq$Month, levels = 5:9,
+                  labels = c("mai", "juin", "juillet", "août", "septembre"))
+head(aq)
+table(aq$Mois)
+```
+
+`aq` contient les 6 colonnes d'`airquality`, plus `TempC` (température en °C) et `Mois` (un facteur à 5 niveaux, de mai à septembre).

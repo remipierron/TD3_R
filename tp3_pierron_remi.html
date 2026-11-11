@@ -371,6 +371,7 @@ display: none;
 <li><a href="#partie-b" id="toc-partie-b">Partie B</a>
 <ul>
 <li><a href="#b1" id="toc-b1">B1</a></li>
+<li><a href="#b2" id="toc-b2">B2</a></li>
 </ul></li>
 </ul>
 </div>
@@ -646,6 +647,28 @@ et Inès au-dessus de 15 en R, et une moyenne de R de 12.61.</p>
 <p>Le tableau compte 153 jours et 6 variables. Seules <code>Ozone</code>
 (37 valeurs manquantes) et <code>Solar.R</code> (7) ont des
 <code>NA</code>. 72.5 % des jours sont complets (111 sur 153).</p>
+</div>
+<div id="b2" class="section level2">
+<h2>B2</h2>
+<pre class="r"><code>aq &lt;- airquality
+aq$TempC &lt;- round((aq$Temp - 32) * 5 / 9, 1)
+aq$Mois &lt;- factor(aq$Month, levels = 5:9,
+                  labels = c(&quot;mai&quot;, &quot;juin&quot;, &quot;juillet&quot;, &quot;août&quot;, &quot;septembre&quot;))
+head(aq)</code></pre>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day TempC Mois
+## 1    41     190  7.4   67     5   1  19.4  mai
+## 2    36     118  8.0   72     5   2  22.2  mai
+## 3    12     149 12.6   74     5   3  23.3  mai
+## 4    18     313 11.5   62     5   4  16.7  mai
+## 5    NA      NA 14.3   56     5   5  13.3  mai
+## 6    28      NA 14.9   66     5   6  18.9  mai</code></pre>
+<pre class="r"><code>table(aq$Mois)</code></pre>
+<pre><code>## 
+##       mai      juin   juillet      août septembre 
+##        31        30        31        31        30</code></pre>
+<p><code>aq</code> contient les 6 colonnes d’<code>airquality</code>,
+plus <code>TempC</code> (température en °C) et <code>Mois</code> (un
+facteur à 5 niveaux, de mai à septembre).</p>
 </div>
 </div>
 
