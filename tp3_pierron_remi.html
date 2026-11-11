@@ -389,6 +389,7 @@ display: none;
 <li><a href="#c6" id="toc-c6">C6</a></li>
 <li><a href="#c7" id="toc-c7">C7</a></li>
 <li><a href="#c8" id="toc-c8">C8</a></li>
+<li><a href="#c9" id="toc-c9">C9</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1033,6 +1034,30 @@ ground squirrel, 16,6 h) chez les herbivores.</p>
 dorment le plus (12,5 h en moyenne) et les artiodactyles (Artiodactyla)
 le moins (4,5 h). Les primates ont le cerveau le plus gros relativement
 à leur poids.</p>
+</div>
+<div id="c9" class="section level2">
+<h2>C9</h2>
+<pre class="r"><code>ms_base &lt;- as.data.frame(ms)
+ms_base &lt;- ms_base[!is.na(ms_base$regime), ]
+
+regime_base &lt;- data.frame(
+  n_especes     = as.vector(table(ms_base$regime)),
+  sommeil_moyen = round(tapply(ms_base$sommeil, ms_base$regime, mean), 1)
+)
+regime_base &lt;- regime_base[order(-regime_base$sommeil_moyen), ]
+regime_base</code></pre>
+<pre><code>##             n_especes sommeil_moyen
+## insectivore         5          14.9
+## omnivore           20          10.9
+## carnivore          19          10.4
+## herbivore          32           9.5</code></pre>
+<pre class="r"><code>all.equal(regime_base$n_especes, sommeil_regime$n_especes)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>all.equal(as.vector(regime_base$sommeil_moyen), sommeil_regime$sommeil_moyen)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>On obtient les mêmes valeurs qu’en C5 (<code>all.equal()</code>
+renvoie <code>TRUE</code> pour les deux colonnes). En R de base, les
+régimes deviennent des noms de lignes au lieu d’une colonne.</p>
 </div>
 </div>
 

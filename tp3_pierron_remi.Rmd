@@ -343,3 +343,22 @@ ms |>
 ```
 
 Cinq ordres comptent au moins 5 espèces. Les rongeurs (Rodentia) dorment le plus (12,5 h en moyenne) et les artiodactyles (Artiodactyla) le moins (4,5 h). Les primates ont le cerveau le plus gros relativement à leur poids.
+
+## C9
+
+```{r c9}
+ms_base <- as.data.frame(ms)
+ms_base <- ms_base[!is.na(ms_base$regime), ]
+
+regime_base <- data.frame(
+  n_especes     = as.vector(table(ms_base$regime)),
+  sommeil_moyen = round(tapply(ms_base$sommeil, ms_base$regime, mean), 1)
+)
+regime_base <- regime_base[order(-regime_base$sommeil_moyen), ]
+regime_base
+
+all.equal(regime_base$n_especes, sommeil_regime$n_especes)
+all.equal(as.vector(regime_base$sommeil_moyen), sommeil_regime$sommeil_moyen)
+```
+
+On obtient les mêmes valeurs qu'en C5 (`all.equal()` renvoie `TRUE` pour les deux colonnes). En R de base, les régimes deviennent des noms de lignes au lieu d'une colonne.
