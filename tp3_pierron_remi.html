@@ -394,6 +394,7 @@ display: none;
 <li><a href="#partie-d" id="toc-partie-d">Partie D</a>
 <ul>
 <li><a href="#d1" id="toc-d1">D1</a></li>
+<li><a href="#d2" id="toc-d2">D2</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1093,6 +1094,47 @@ régimes deviennent des noms de lignes au lieu d’une colonne.</p>
 <p>Le fichier compte 617 lignes (articles commandés), qui correspondent
 à 490 commandes, 75 clients et 481 produits distincts. Les commandes
 vont du 11 janvier 2003 au 26 décembre 2007.</p>
+</div>
+<div id="d2" class="section level2">
+<h2>D2</h2>
+<pre class="r"><code>cmd &lt;- commandes |&gt;
+  as_tibble() |&gt;
+  rename(client = Customer_ID, vendeur = Employee_ID,
+         date_cmd = Order_Date, date_livr = Delivery_Date,
+         commande = Order_ID, canal = Order_Type, produit = Product_ID,
+         quantite = Quantity, prix_total = Total_Retail_Price,
+         cout_unitaire = CostPrice_Per_Unit) |&gt;
+  mutate(canal     = factor(canal, levels = 1:3,
+                            labels = c(&quot;magasin&quot;, &quot;catalogue&quot;, &quot;internet&quot;)),
+         vendeur   = if_else(vendeur == 99999999, NA, vendeur),
+         date_cmd  = as.Date(date_cmd),
+         date_livr = as.Date(date_livr))
+glimpse(cmd)</code></pre>
+<pre><code>## Rows: 617
+## Columns: 10
+## $ client        &lt;int&gt; 63, 5, 45, 41, 183, 79, 23, 23, 45, 45, 56, 183, 16, 79,…
+## $ vendeur       &lt;int&gt; 121039, NA, NA, 120174, 120134, NA, NA, NA, NA, NA, 1210…
+## $ date_cmd      &lt;date&gt; 2003-01-11, 2003-01-15, 2003-01-20, 2003-01-28, 2003-02…
+## $ date_livr     &lt;date&gt; 2003-01-11, 2003-01-19, 2003-01-22, 2003-01-28, 2003-02…
+## $ commande      &lt;int&gt; 1230058123, 1230080101, 1230106883, 1230147441, 12303150…
+## $ canal         &lt;fct&gt; magasin, catalogue, catalogue, magasin, magasin, catalog…
+## $ produit       &lt;dbl&gt; 220101300017, 230100500026, 240600100080, 240600100010, …
+## $ quantite      &lt;int&gt; 1, 1, 1, 2, 3, 1, 1, 2, 2, 1, 2, 1, 2, 1, 2, 2, 1, 2, 1,…
+## $ prix_total    &lt;dbl&gt; 16.5, 247.5, 28.3, 32.0, 63.6, 234.6, 35.4, 73.8, 127.0,…
+## $ cout_unitaire &lt;dbl&gt; 7.45, 109.55, 8.55, 6.50, 8.80, 115.95, 16.15, 16.85, 28…</code></pre>
+<pre class="r"><code>count(cmd, canal)</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   canal         n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 magasin     324
+## 2 catalogue   170
+## 3 internet    123</code></pre>
+<pre class="r"><code>sum(is.na(cmd$vendeur))</code></pre>
+<pre><code>## [1] 293</code></pre>
+<p>Le tibble <code>cmd</code> a des colonnes en français, un canal en
+facteur (magasin, catalogue, internet), des dates au format
+<code>Date</code>, et 293 lignes sans vendeur passées en
+<code>NA</code>.</p>
 </div>
 </div>
 

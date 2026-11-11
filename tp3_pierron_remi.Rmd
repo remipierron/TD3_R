@@ -380,3 +380,25 @@ commandes |>
 ```
 
 Le fichier compte 617 lignes (articles commandés), qui correspondent à 490 commandes, 75 clients et 481 produits distincts. Les commandes vont du 11 janvier 2003 au 26 décembre 2007.
+
+## D2
+
+```{r d2}
+cmd <- commandes |>
+  as_tibble() |>
+  rename(client = Customer_ID, vendeur = Employee_ID,
+         date_cmd = Order_Date, date_livr = Delivery_Date,
+         commande = Order_ID, canal = Order_Type, produit = Product_ID,
+         quantite = Quantity, prix_total = Total_Retail_Price,
+         cout_unitaire = CostPrice_Per_Unit) |>
+  mutate(canal     = factor(canal, levels = 1:3,
+                            labels = c("magasin", "catalogue", "internet")),
+         vendeur   = if_else(vendeur == 99999999, NA, vendeur),
+         date_cmd  = as.Date(date_cmd),
+         date_livr = as.Date(date_livr))
+glimpse(cmd)
+count(cmd, canal)
+sum(is.na(cmd$vendeur))
+```
+
+Le tibble `cmd` a des colonnes en français, un canal en facteur (magasin, catalogue, internet), des dates au format `Date`, et `r sum(is.na(cmd$vendeur))` lignes sans vendeur passées en `NA`.
