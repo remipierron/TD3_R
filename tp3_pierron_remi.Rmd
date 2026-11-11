@@ -107,3 +107,25 @@ round(tapply(promo$moyenne, promo$filiere, mean, na.rm = TRUE), 2)
 ```
 
 La filière info compte 4 étudiants, stat et eco 3 chacune. La filière info a la meilleure moyenne (15,5), devant stat (11,59) et eco (10,28).
+
+## A7
+
+**Erreurs repérées**
+
+1. `=` affecte au lieu de comparer : il faut `==`. La ligne produit une erreur.
+2. `Age` n'existe pas (R distingue majuscules et minuscules), donc `promo$Age` vaut `NULL`. Il manque aussi la virgule : sans elle, on sélectionne des colonnes et non des lignes. Enfin, l'âge de Fatou est `NA` et ferait apparaître une ligne vide.
+3. `note_r` contient un `NA` (Hugo) : le filtre renvoie un `NA` en plus des prénoms.
+4. `mean()` renvoie `NA` à cause de la note manquante de Hugo : il faut `na.rm = TRUE`.
+5. Le niveau s'écrit `"info"` et non `"Info"` : la comparaison est toujours fausse et le résultat vaut 0.
+
+**Versions corrigées**
+
+```{r a7}
+promo[promo$filiere == "info", ]                    # 1
+promo[which(promo$age > 30), ]                      # 2
+promo[which(promo$note_r > 15), "prenom"]           # 3
+mean(promo$note_r, na.rm = TRUE)                    # 4
+sum(promo$filiere == "info")                        # 5
+```
+
+Les cinq lignes donnent maintenant le résultat attendu : 4 étudiants en info, 4 étudiants de plus de 30 ans (Bruno, Dina, Gaël, Jade), Chen et Inès au-dessus de 15 en R, et une moyenne de R de `r round(mean(promo$note_r, na.rm = TRUE), 2)`.
