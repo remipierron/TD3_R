@@ -448,3 +448,18 @@ ca_annee |> filter(canal == "internet")
 ```
 
 La part d'internet n'augmente pas régulièrement. Elle passe de 18,1 % en 2003 à 27,5 % en 2005, chute à 12,8 % en 2006, puis atteint son maximum en 2007 (28,9 %). La tendance est plutôt à la hausse, mais avec de fortes variations d'une année sur l'autre.
+
+## D6
+
+```{r d6}
+cmd |>
+  group_by(client, canal) |>
+  summarise(ca = sum(prix_total), n_cmd = n_distinct(commande), .groups = "drop") |>
+  group_by(client) |>
+  summarise(ca              = sum(ca),
+            n_commandes     = sum(n_cmd),
+            canal_principal = canal[which.max(n_cmd)]) |>
+  slice_max(ca, n = 5)
+```
+
+Les 5 meilleurs clients sont les clients 16 (6 546 €), 10, 45, 2806 et 195. Leur canal principal est le catalogue pour les clients 16 et 2806, et le magasin pour les trois autres. Le client 10 passe le plus de commandes (23), mais c'est le client 16 qui génère le plus de CA.
