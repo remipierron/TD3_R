@@ -376,6 +376,7 @@ display: none;
 <li><a href="#b4" id="toc-b4">B4</a></li>
 <li><a href="#b5" id="toc-b5">B5</a></li>
 <li><a href="#b6" id="toc-b6">B6</a></li>
+<li><a href="#b7" id="toc-b7">B7</a></li>
 </ul></li>
 </ul>
 </div>
@@ -741,6 +742,21 @@ croissant, et <code>!duplicated()</code> garde la première ligne de
 chaque mois. En cas d’égalité, c’est donc bien le premier jour du mois
 qui est retenu (c’est le cas en juillet et en septembre). Le jour le
 plus chaud de l’été est le 28 août (36,1 °C).</p>
+</div>
+<div id="b7" class="section level2">
+<h2>B7</h2>
+<pre class="r"><code>oz_chaud &lt;- tapply(aq$Ozone, aq$TempC &gt;= 30, mean, na.rm = TRUE)
+round(oz_chaud, 1)</code></pre>
+<pre><code>## FALSE  TRUE 
+##  30.9  79.2</code></pre>
+<pre class="r"><code>round(oz_chaud[&quot;TRUE&quot;] / oz_chaud[&quot;FALSE&quot;], 2)</code></pre>
+<pre><code>## TRUE 
+## 2.57</code></pre>
+<p>Les jours à 30 °C ou plus, l’ozone moyen est de 79.2 ppb, contre 30.9
+ppb les autres jours, soit environ 2.6 fois plus. On ne peut pas pour
+autant conclure que la chaleur cause l’ozone : c’est une simple
+association, et d’autres facteurs liés aux journées chaudes (fort
+ensoleillement, vent faible) peuvent expliquer les deux.</p>
 </div>
 </div>
 
