@@ -399,6 +399,7 @@ display: none;
 <li><a href="#d4" id="toc-d4">D4</a></li>
 <li><a href="#d5" id="toc-d5">D5</a></li>
 <li><a href="#d6" id="toc-d6">D6</a></li>
+<li><a href="#d7" id="toc-d7">D7</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1255,6 +1256,31 @@ de fortes variations d’une année sur l’autre.</p>
 et 195. Leur canal principal est le catalogue pour les clients 16 et
 2806, et le magasin pour les trois autres. Le client 10 passe le plus de
 commandes (23), mais c’est le client 16 qui génère le plus de CA.</p>
+</div>
+<div id="d7" class="section level2">
+<h2>D7</h2>
+<pre class="r"><code>par_commande &lt;- cmd |&gt;
+  group_by(commande, canal) |&gt;
+  summarise(montant    = sum(prix_total),
+            n_articles = n(),
+            .groups = &quot;drop&quot;)
+
+par_commande |&gt;
+  group_by(canal) |&gt;
+  summarise(n_commandes      = n(),
+            panier_moyen     = round(mean(montant), 2),
+            articles_moyen   = round(mean(n_articles), 2))</code></pre>
+<pre><code>## # A tibble: 3 × 4
+##   canal     n_commandes panier_moyen articles_moyen
+##   &lt;fct&gt;           &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;
+## 1 magasin           260         172.           1.25
+## 2 catalogue         132         257.           1.29
+## 3 internet           98         219.           1.26</code></pre>
+<p>Le panier moyen est le plus élevé sur catalogue (environ 257 €),
+devant internet (219 €) et le magasin (172 €). Le nombre moyen
+d’articles par commande est presque le même partout (environ 1,3) : la
+différence de panier vient donc du prix des articles achetés, et non de
+leur nombre.</p>
 </div>
 </div>
 

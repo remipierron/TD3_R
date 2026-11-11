@@ -463,3 +463,21 @@ cmd |>
 ```
 
 Les 5 meilleurs clients sont les clients 16 (6 546 €), 10, 45, 2806 et 195. Leur canal principal est le catalogue pour les clients 16 et 2806, et le magasin pour les trois autres. Le client 10 passe le plus de commandes (23), mais c'est le client 16 qui génère le plus de CA.
+
+## D7
+
+```{r d7}
+par_commande <- cmd |>
+  group_by(commande, canal) |>
+  summarise(montant    = sum(prix_total),
+            n_articles = n(),
+            .groups = "drop")
+
+par_commande |>
+  group_by(canal) |>
+  summarise(n_commandes      = n(),
+            panier_moyen     = round(mean(montant), 2),
+            articles_moyen   = round(mean(n_articles), 2))
+```
+
+Le panier moyen est le plus élevé sur catalogue (environ 257 €), devant internet (219 €) et le magasin (172 €). Le nombre moyen d'articles par commande est presque le même partout (environ 1,3) : la différence de panier vient donc du prix des articles achetés, et non de leur nombre.
