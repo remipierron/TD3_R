@@ -154,3 +154,13 @@ table(aq$Mois)
 ```
 
 `aq` contient les 6 colonnes d'`airquality`, plus `TempC` (température en °C) et `Mois` (un facteur à 5 niveaux, de mai à septembre).
+
+## B3
+
+```{r b3}
+sum(aq$TempC >= 30)
+table(aq$Mois[aq$TempC >= 30])
+round(tapply(aq$TempC, aq$Mois, mean), 1)
+```
+
+`r sum(aq$TempC >= 30)` jours ont atteint 30 °C ou plus : aucun en mai, 5 en juin, 10 en juillet, 14 en août et 5 en septembre. Août est le mois le plus chaud en moyenne (28,9 °C), de très peu devant juillet (28,8 °C).
