@@ -1,6 +1,9 @@
 ---
 title: "tp3_pierron_remi"
-output: html_document
+author: "Rémi Pierron"
+output:
+  html_document:
+    toc: true
 date: "2026-11-11"
 ---
 
@@ -10,6 +13,21 @@ library(tidyverse)
 source("donnees_tp3.R")
 ```
 
-## Partie A
+# Partie A
 
+## A1
+
+```{r a1}
+promo <- data.frame(
+  prenom, age,
+  filiere = factor(filiere, levels = c("info", "stat", "eco")),
+  note_r, note_stat
+)
+
+str(promo)
+dim(promo)
+levels(promo$filiere)
+```
+
+Le data frame `promo` compte 10 lignes (étudiants) et 5 colonnes. La colonne `filiere` est un facteur dont les niveaux sont, dans l'ordre, `info`, `stat`, `eco`.
 

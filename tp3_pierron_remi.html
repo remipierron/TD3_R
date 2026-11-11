@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Rémi Pierron" />
 
 <meta name="date" content="2026-11-11" />
 
@@ -350,13 +351,46 @@ display: none;
 
 
 <h1 class="title toc-ignore">tp3_pierron_remi</h1>
+<h4 class="author">Rémi Pierron</h4>
 <h4 class="date">2026-11-11</h4>
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#partie-a" id="toc-partie-a">Partie A</a>
+<ul>
+<li><a href="#a1" id="toc-a1">A1</a></li>
+</ul></li>
+</ul>
+</div>
 
-<div id="partie-a" class="section level2">
-<h2>Partie A</h2>
+<div id="partie-a" class="section level1">
+<h1>Partie A</h1>
+<div id="a1" class="section level2">
+<h2>A1</h2>
+<pre class="r"><code>promo &lt;- data.frame(
+  prenom, age,
+  filiere = factor(filiere, levels = c(&quot;info&quot;, &quot;stat&quot;, &quot;eco&quot;)),
+  note_r, note_stat
+)
+
+str(promo)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  5 variables:
+##  $ prenom   : chr  &quot;Awa&quot; &quot;Bruno&quot; &quot;Chen&quot; &quot;Dina&quot; ...
+##  $ age      : num  24 31 22 45 28 NA 35 19 27 41
+##  $ filiere  : Factor w/ 3 levels &quot;info&quot;,&quot;stat&quot;,..: 1 2 1 3 2 3 1 2 1 3
+##  $ note_r   : num  14.5 9 17 11.5 12 8.5 15 NA 16 10
+##  $ note_stat: num  12 13.5 15 9 14 11 NA 10.5 17.5 12.5</code></pre>
+<pre class="r"><code>dim(promo)</code></pre>
+<pre><code>## [1] 10  5</code></pre>
+<pre class="r"><code>levels(promo$filiere)</code></pre>
+<pre><code>## [1] &quot;info&quot; &quot;stat&quot; &quot;eco&quot;</code></pre>
+<p>Le data frame <code>promo</code> compte 10 lignes (étudiants) et 5
+colonnes. La colonne <code>filiere</code> est un facteur dont les
+niveaux sont, dans l’ordre, <code>info</code>, <code>stat</code>,
+<code>eco</code>.</p>
+</div>
 </div>
 
 
