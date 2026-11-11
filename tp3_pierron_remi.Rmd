@@ -289,3 +289,20 @@ count(ms, classe_poids)
 ```
 
 Les trois colonnes sont ajoutées. `part_rem` et `cerveau_pct` valent `NA` quand le sommeil paradoxal ou le poids du cerveau manque. `classe_poids` est un facteur ordonné (`< 1 kg` < `1-10 kg` < `10-100 kg` < `100 kg et plus`), où les petites espèces de moins de 1 kg sont les plus nombreuses.
+
+## C5
+
+```{r c5}
+sommeil_regime <- ms |>
+  filter(!is.na(regime)) |>
+  group_by(regime) |>
+  summarise(n_especes     = n(),
+            sommeil_moyen = round(mean(sommeil), 1),
+            ecart_type    = round(sd(sommeil), 1),
+            minimum       = min(sommeil),
+            maximum       = max(sommeil)) |>
+  arrange(desc(sommeil_moyen))
+sommeil_regime
+```
+
+Les insectivores dorment le plus en moyenne (14,9 h), devant les omnivores, les carnivores et les herbivores (9,5 h). Les écarts-types sont élevés : à l'intérieur d'un même régime, le sommeil varie beaucoup.

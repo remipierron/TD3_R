@@ -385,6 +385,7 @@ display: none;
 <li><a href="#c2" id="toc-c2">C2</a></li>
 <li><a href="#c3" id="toc-c3">C3</a></li>
 <li><a href="#c4" id="toc-c4">C4</a></li>
+<li><a href="#c5" id="toc-c5">C5</a></li>
 </ul></li>
 </ul>
 </div>
@@ -945,6 +946,30 @@ paradoxal ou le poids du cerveau manque. <code>classe_poids</code> est
 un facteur ordonné (<code>&lt; 1 kg</code> &lt; <code>1-10 kg</code>
 &lt; <code>10-100 kg</code> &lt; <code>100 kg et plus</code>), où les
 petites espèces de moins de 1 kg sont les plus nombreuses.</p>
+</div>
+<div id="c5" class="section level2">
+<h2>C5</h2>
+<pre class="r"><code>sommeil_regime &lt;- ms |&gt;
+  filter(!is.na(regime)) |&gt;
+  group_by(regime) |&gt;
+  summarise(n_especes     = n(),
+            sommeil_moyen = round(mean(sommeil), 1),
+            ecart_type    = round(sd(sommeil), 1),
+            minimum       = min(sommeil),
+            maximum       = max(sommeil)) |&gt;
+  arrange(desc(sommeil_moyen))
+sommeil_regime</code></pre>
+<pre><code>## # A tibble: 4 × 6
+##   regime      n_especes sommeil_moyen ecart_type minimum maximum
+##   &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 insectivore         5          14.9        5.9     8.4    19.9
+## 2 omnivore           20          10.9        2.9     8      18  
+## 3 carnivore          19          10.4        4.7     2.7    19.4
+## 4 herbivore          32           9.5        4.9     1.9    16.6</code></pre>
+<p>Les insectivores dorment le plus en moyenne (14,9 h), devant les
+omnivores, les carnivores et les herbivores (9,5 h). Les écarts-types
+sont élevés : à l’intérieur d’un même régime, le sommeil varie
+beaucoup.</p>
 </div>
 </div>
 
