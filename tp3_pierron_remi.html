@@ -391,6 +391,10 @@ display: none;
 <li><a href="#c8" id="toc-c8">C8</a></li>
 <li><a href="#c9" id="toc-c9">C9</a></li>
 </ul></li>
+<li><a href="#partie-d" id="toc-partie-d">Partie D</a>
+<ul>
+<li><a href="#d1" id="toc-d1">D1</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -1058,6 +1062,37 @@ regime_base</code></pre>
 <p>On obtient les mêmes valeurs qu’en C5 (<code>all.equal()</code>
 renvoie <code>TRUE</code> pour les deux colonnes). En R de base, les
 régimes deviennent des noms de lignes au lieu d’une colonne.</p>
+</div>
+</div>
+<div id="partie-d" class="section level1">
+<h1>Partie D</h1>
+<div id="d1" class="section level2">
+<h2>D1</h2>
+<pre class="r"><code>glimpse(commandes)</code></pre>
+<pre><code>## Rows: 617
+## Columns: 10
+## $ Customer_ID        &lt;int&gt; 63, 5, 45, 41, 183, 79, 23, 23, 45, 45, 56, 183, 16…
+## $ Employee_ID        &lt;int&gt; 121039, 99999999, 99999999, 120174, 120134, 9999999…
+## $ Order_Date         &lt;chr&gt; &quot;2003-01-11&quot;, &quot;2003-01-15&quot;, &quot;2003-01-20&quot;, &quot;2003-01-…
+## $ Delivery_Date      &lt;chr&gt; &quot;2003-01-11&quot;, &quot;2003-01-19&quot;, &quot;2003-01-22&quot;, &quot;2003-01-…
+## $ Order_ID           &lt;int&gt; 1230058123, 1230080101, 1230106883, 1230147441, 123…
+## $ Order_Type         &lt;int&gt; 1, 2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 1, 2, 2, 1, 2, 1, …
+## $ Product_ID         &lt;dbl&gt; 220101300017, 230100500026, 240600100080, 240600100…
+## $ Quantity           &lt;int&gt; 1, 1, 1, 2, 3, 1, 1, 2, 2, 1, 2, 1, 2, 1, 2, 2, 1, …
+## $ Total_Retail_Price &lt;dbl&gt; 16.5, 247.5, 28.3, 32.0, 63.6, 234.6, 35.4, 73.8, 1…
+## $ CostPrice_Per_Unit &lt;dbl&gt; 7.45, 109.55, 8.55, 6.50, 8.80, 115.95, 16.15, 16.8…</code></pre>
+<pre class="r"><code>commandes |&gt;
+  summarise(n_lignes    = n(),
+            n_commandes = n_distinct(Order_ID),
+            n_clients   = n_distinct(Customer_ID),
+            n_produits  = n_distinct(Product_ID),
+            debut       = min(Order_Date),
+            fin         = max(Order_Date))</code></pre>
+<pre><code>##   n_lignes n_commandes n_clients n_produits      debut        fin
+## 1      617         490        75        481 2003-01-11 2007-12-26</code></pre>
+<p>Le fichier compte 617 lignes (articles commandés), qui correspondent
+à 490 commandes, 75 clients et 481 produits distincts. Les commandes
+vont du 11 janvier 2003 au 26 décembre 2007.</p>
 </div>
 </div>
 

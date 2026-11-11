@@ -362,3 +362,21 @@ all.equal(as.vector(regime_base$sommeil_moyen), sommeil_regime$sommeil_moyen)
 ```
 
 On obtient les mêmes valeurs qu'en C5 (`all.equal()` renvoie `TRUE` pour les deux colonnes). En R de base, les régimes deviennent des noms de lignes au lieu d'une colonne.
+
+# Partie D
+
+## D1
+
+```{r d1}
+glimpse(commandes)
+
+commandes |>
+  summarise(n_lignes    = n(),
+            n_commandes = n_distinct(Order_ID),
+            n_clients   = n_distinct(Customer_ID),
+            n_produits  = n_distinct(Product_ID),
+            debut       = min(Order_Date),
+            fin         = max(Order_Date))
+```
+
+Le fichier compte 617 lignes (articles commandés), qui correspondent à 490 commandes, 75 clients et 481 produits distincts. Les commandes vont du 11 janvier 2003 au 26 décembre 2007.
