@@ -361,6 +361,7 @@ display: none;
 <li><a href="#partie-a" id="toc-partie-a">Partie A</a>
 <ul>
 <li><a href="#a1" id="toc-a1">A1</a></li>
+<li><a href="#a2" id="toc-a2">A2</a></li>
 </ul></li>
 </ul>
 </div>
@@ -390,6 +391,122 @@ str(promo)</code></pre>
 colonnes. La colonne <code>filiere</code> est un facteur dont les
 niveaux sont, dans l’ordre, <code>info</code>, <code>stat</code>,
 <code>eco</code>.</p>
+</div>
+<div id="a2" class="section level2">
+<h2>A2</h2>
+<p><strong>Prédictions (écrites avant exécution).</strong> La
+2<sup>e</sup> colonne de <code>promo</code> est <code>age</code>
+(numérique, 10 valeurs).</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Instruction</th>
+<th>Classe prédite</th>
+<th>Dimensions / longueur prédites</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>promo[, 2]</code></td>
+<td><code>numeric</code></td>
+<td>vecteur de longueur 10</td>
+</tr>
+<tr class="even">
+<td><code>promo[2]</code></td>
+<td><code>data.frame</code></td>
+<td>10 lignes × 1 colonne</td>
+</tr>
+<tr class="odd">
+<td><code>promo[[2]]</code></td>
+<td><code>numeric</code></td>
+<td>vecteur de longueur 10</td>
+</tr>
+<tr class="even">
+<td><code>promo[2, ]</code></td>
+<td><code>data.frame</code></td>
+<td>1 ligne × 5 colonnes</td>
+</tr>
+<tr class="odd">
+<td><code>promo[, c(&quot;age&quot;, &quot;note_r&quot;)]</code></td>
+<td><code>data.frame</code></td>
+<td>10 lignes × 2 colonnes</td>
+</tr>
+<tr class="even">
+<td><code>promo$ag</code></td>
+<td><code>numeric</code></td>
+<td>vecteur de longueur 10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Vérification.</strong> On utilise <code>class()</code> pour
+la classe, <code>dim()</code> pour un data frame et
+<code>length()</code> pour un vecteur.</p>
+<pre class="r"><code>class(promo[, 2]); length(promo[, 2])</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="r"><code>class(promo[2]); dim(promo[2])</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] 10  1</code></pre>
+<pre class="r"><code>class(promo[[2]]); length(promo[[2]])</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="r"><code>class(promo[2, ]); dim(promo[2, ])</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] 1 5</code></pre>
+<pre class="r"><code>class(promo[, c(&quot;age&quot;, &quot;note_r&quot;)]); dim(promo[, c(&quot;age&quot;, &quot;note_r&quot;)])</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] 10  2</code></pre>
+<pre class="r"><code>class(promo$ag); length(promo$ag)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre><code>## [1] 10</code></pre>
+<p><strong>Explications.</strong> Les six prédictions sont confirmées.
+Pour les comprendre, il faut se rappeler qu’un data frame est
+<strong>une liste de vecteurs de même longueur</strong>, et que chaque
+vecteur est une colonne (<code>typeof(promo)</code> vaut
+<code>&quot;list&quot;</code>).</p>
+<ul>
+<li><strong><code>promo[, 2]</code> renvoie un vecteur.</strong> Avec la
+notation <code>[lignes, colonnes]</code>, demander <strong>une seule
+colonne</strong> simplifie le résultat en vecteur. Le cours le signale :
+« <code>df[, 2]</code> renvoie un vecteur, mais <code>df[, 2:3]</code>
+un data frame ». Pour garder un data frame, on écrit
+<code>promo[, 2, drop = FALSE]</code>.</li>
+<li><strong><code>promo[2]</code> renvoie un data frame de 10 ×
+1.</strong> Sans virgule, on indexe le data frame comme une
+<strong>liste</strong> : <code>[ ]</code> renvoie une sous-liste,
+c’est-à-dire un data frame d’une colonne. C’est l’équivalent de
+<code>etudiants[&quot;age&quot;]</code> dans le cours (« un data frame d’une
+colonne ! »).</li>
+<li><strong><code>promo[[2]]</code> renvoie un vecteur.</strong>
+<code>[[ ]]</code> extrait le <strong>contenu</strong> de l’élément de
+la liste, donc le vecteur <code>age</code> lui-même. Le cours présente
+<code>df[[&quot;age&quot;]]</code> comme « un vecteur aussi ».</li>
+<li><strong><code>promo[2, ]</code> renvoie un data frame de 1 ×
+5.</strong> On demande la 2<sup>e</sup> ligne et toutes les colonnes
+(Bruno). Ces colonnes ont des types différents (texte, nombres,
+facteur). Or un vecteur n’a qu’un seul type (séance 2), donc R ne peut
+pas simplifier et garde un data frame.</li>
+<li><strong><code>promo[, c(&quot;age&quot;, &quot;note_r&quot;)]</code> renvoie un data
+frame de 10 × 2.</strong> Dès qu’on sélectionne plusieurs colonnes, il
+n’y a pas de simplification possible.</li>
+<li><strong><code>promo$ag</code> renvoie le vecteur
+<code>age</code>.</strong> Il n’existe pas de colonne <code>ag</code>,
+mais sur un data.frame, <code>$</code> fait une <strong>correspondance
+partielle</strong> : <code>ag</code> est complété silencieusement en
+<code>age</code>, la seule colonne qui commence ainsi. Le cours oppose
+ce comportement à celui d’un tibble, qui renvoie <code>NULL</code> avec
+un avertissement. Ce comportement est piégeux et il faut toujours écrire
+le nom complet.</li>
+</ul>
+<p>On retiendra que <code>promo[, 2]</code>, <code>promo[[2]]</code> et
+<code>promo$age</code> donnent un vecteur, alors que
+<code>promo[2]</code> et <code>promo[, 2, drop = FALSE]</code> donnent
+un data frame.</p>
 </div>
 </div>
 

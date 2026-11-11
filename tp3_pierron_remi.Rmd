@@ -31,3 +31,41 @@ levels(promo$filiere)
 
 Le data frame `promo` compte 10 lignes (étudiants) et 5 colonnes. La colonne `filiere` est un facteur dont les niveaux sont, dans l'ordre, `info`, `stat`, `eco`.
 
+
+## A2
+
+**Prédictions (écrites avant exécution).** La 2^e^ colonne de `promo` est `age` (numérique, 10 valeurs).
+
+| Instruction | Classe prédite | Dimensions / longueur prédites |
+|---|---|---|
+| `promo[, 2]` | `numeric` | vecteur de longueur 10 |
+| `promo[2]` | `data.frame` | 10 lignes × 1 colonne |
+| `promo[[2]]` | `numeric` | vecteur de longueur 10 |
+| `promo[2, ]` | `data.frame` | 1 ligne × 5 colonnes |
+| `promo[, c("age", "note_r")]` | `data.frame` | 10 lignes × 2 colonnes |
+| `promo$ag` | `numeric` | vecteur de longueur 10 |
+
+**Vérification.** On utilise `class()` pour la classe, `dim()` pour un data frame et `length()` pour un vecteur.
+
+```{r a2-1}
+class(promo[, 2]); length(promo[, 2])
+class(promo[2]); dim(promo[2])
+class(promo[[2]]); length(promo[[2]])
+```
+
+```{r a2-2}
+class(promo[2, ]); dim(promo[2, ])
+class(promo[, c("age", "note_r")]); dim(promo[, c("age", "note_r")])
+class(promo$ag); length(promo$ag)
+```
+
+**Explications.** Les six prédictions sont confirmées. Pour les comprendre, il faut se rappeler qu'un data frame est **une liste de vecteurs de même longueur**, et que chaque vecteur est une colonne (`typeof(promo)` vaut `"list"`).
+
+- **`promo[, 2]` renvoie un vecteur.** Avec la notation `[lignes, colonnes]`, demander **une seule colonne** simplifie le résultat en vecteur. Le cours le signale : « `df[, 2]` renvoie un vecteur, mais `df[, 2:3]` un data frame ». Pour garder un data frame, on écrit `promo[, 2, drop = FALSE]`.
+- **`promo[2]` renvoie un data frame de 10 × 1.** Sans virgule, on indexe le data frame comme une **liste** : `[ ]` renvoie une sous-liste, c'est-à-dire un data frame d'une colonne. C'est l'équivalent de `etudiants["age"]` dans le cours (« un data frame d'une colonne ! »).
+- **`promo[[2]]` renvoie un vecteur.** `[[ ]]` extrait le **contenu** de l'élément de la liste, donc le vecteur `age` lui-même. Le cours présente `df[["age"]]` comme « un vecteur aussi ».
+- **`promo[2, ]` renvoie un data frame de 1 × 5.** On demande la 2^e^ ligne et toutes les colonnes (Bruno). Ces colonnes ont des types différents (texte, nombres, facteur). Or un vecteur n'a qu'un seul type (séance 2), donc R ne peut pas simplifier et garde un data frame.
+- **`promo[, c("age", "note_r")]` renvoie un data frame de 10 × 2.** Dès qu'on sélectionne plusieurs colonnes, il n'y a pas de simplification possible.
+- **`promo$ag` renvoie le vecteur `age`.** Il n'existe pas de colonne `ag`, mais sur un data.frame, `$` fait une **correspondance partielle** : `ag` est complété silencieusement en `age`, la seule colonne qui commence ainsi. Le cours oppose ce comportement à celui d'un tibble, qui renvoie `NULL` avec un avertissement. Ce comportement est piégeux et il faut toujours écrire le nom complet.
+
+On retiendra que `promo[, 2]`, `promo[[2]]` et `promo$age` donnent un vecteur, alors que `promo[2]` et `promo[, 2, drop = FALSE]` donnent un data frame.
