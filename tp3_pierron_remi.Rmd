@@ -274,3 +274,18 @@ ms |>
 ```
 
 12 espèces dorment plus de 15 h par jour, et 9 moins de 4 h. Les grands dormeurs sont surtout de petits animaux (chauves-souris, opossums, écureuils), aux régimes variés. Les petits dormeurs sont presque tous de gros herbivores (girafe, cheval, éléphants…), sauf deux carnivores marins (globicéphale et phoque).
+
+## C4
+
+```{r c4}
+ms <- ms |>
+  mutate(part_rem     = round(100 * sommeil_rem / sommeil, 1),
+         cerveau_pct  = round(100 * cerveau / poids, 2),
+         classe_poids = cut(poids, breaks = c(0, 1, 10, 100, Inf),
+                            labels = c("< 1 kg", "1-10 kg", "10-100 kg", "100 kg et plus"),
+                            right = FALSE, ordered_result = TRUE))
+ms |> select(nom, part_rem, cerveau_pct, classe_poids)
+count(ms, classe_poids)
+```
+
+Les trois colonnes sont ajoutées. `part_rem` et `cerveau_pct` valent `NA` quand le sommeil paradoxal ou le poids du cerveau manque. `classe_poids` est un facteur ordonné (`< 1 kg` < `1-10 kg` < `10-100 kg` < `100 kg et plus`), où les petites espèces de moins de 1 kg sont les plus nombreuses.

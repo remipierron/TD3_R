@@ -384,6 +384,7 @@ display: none;
 <li><a href="#c1" id="toc-c1">C1</a></li>
 <li><a href="#c2" id="toc-c2">C2</a></li>
 <li><a href="#c3" id="toc-c3">C3</a></li>
+<li><a href="#c4" id="toc-c4">C4</a></li>
 </ul></li>
 </ul>
 </div>
@@ -906,6 +907,44 @@ grands dormeurs sont surtout de petits animaux (chauves-souris,
 opossums, écureuils), aux régimes variés. Les petits dormeurs sont
 presque tous de gros herbivores (girafe, cheval, éléphants…), sauf deux
 carnivores marins (globicéphale et phoque).</p>
+</div>
+<div id="c4" class="section level2">
+<h2>C4</h2>
+<pre class="r"><code>ms &lt;- ms |&gt;
+  mutate(part_rem     = round(100 * sommeil_rem / sommeil, 1),
+         cerveau_pct  = round(100 * cerveau / poids, 2),
+         classe_poids = cut(poids, breaks = c(0, 1, 10, 100, Inf),
+                            labels = c(&quot;&lt; 1 kg&quot;, &quot;1-10 kg&quot;, &quot;10-100 kg&quot;, &quot;100 kg et plus&quot;),
+                            right = FALSE, ordered_result = TRUE))
+ms |&gt; select(nom, part_rem, cerveau_pct, classe_poids)</code></pre>
+<pre><code>## # A tibble: 83 × 4
+##    nom                        part_rem cerveau_pct classe_poids  
+##    &lt;chr&gt;                         &lt;dbl&gt;       &lt;dbl&gt; &lt;ord&gt;         
+##  1 Cheetah                        NA         NA    10-100 kg     
+##  2 Owl monkey                     10.6        3.23 &lt; 1 kg        
+##  3 Mountain beaver                16.7       NA    1-10 kg       
+##  4 Greater short-tailed shrew     15.4        1.53 &lt; 1 kg        
+##  5 Cow                            17.5        0.07 100 kg et plus
+##  6 Three-toed sloth               15.3       NA    1-10 kg       
+##  7 Northern fur seal              16.1       NA    10-100 kg     
+##  8 Vesper mouse                   NA         NA    &lt; 1 kg        
+##  9 Dog                            28.7        0.5  10-100 kg     
+## 10 Roe deer                       NA          0.66 10-100 kg     
+## # ℹ 73 more rows</code></pre>
+<pre class="r"><code>count(ms, classe_poids)</code></pre>
+<pre><code>## # A tibble: 4 × 2
+##   classe_poids       n
+##   &lt;ord&gt;          &lt;int&gt;
+## 1 &lt; 1 kg            35
+## 2 1-10 kg           21
+## 3 10-100 kg         15
+## 4 100 kg et plus    12</code></pre>
+<p>Les trois colonnes sont ajoutées. <code>part_rem</code> et
+<code>cerveau_pct</code> valent <code>NA</code> quand le sommeil
+paradoxal ou le poids du cerveau manque. <code>classe_poids</code> est
+un facteur ordonné (<code>&lt; 1 kg</code> &lt; <code>1-10 kg</code>
+&lt; <code>10-100 kg</code> &lt; <code>100 kg et plus</code>), où les
+petites espèces de moins de 1 kg sont les plus nombreuses.</p>
 </div>
 </div>
 
