@@ -258,3 +258,19 @@ count(ms, regime)
 ```
 
 Le tibble `ms` contient les 83 espèces et 7 colonnes en français. Le régime est recodé, et les 7 espèces sans régime restent `NA`, car `case_when()` renvoie `NA` quand aucune condition n'est vraie.
+
+## C3
+
+```{r c3}
+ms |>
+  filter(sommeil > 15) |>
+  arrange(desc(sommeil)) |>
+  select(nom, regime, sommeil, poids)
+
+ms |>
+  filter(sommeil < 4) |>
+  arrange(sommeil) |>
+  select(nom, regime, sommeil, poids)
+```
+
+12 espèces dorment plus de 15 h par jour, et 9 moins de 4 h. Les grands dormeurs sont surtout de petits animaux (chauves-souris, opossums, écureuils), aux régimes variés. Les petits dormeurs sont presque tous de gros herbivores (girafe, cheval, éléphants…), sauf deux carnivores marins (globicéphale et phoque).

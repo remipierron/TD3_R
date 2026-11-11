@@ -383,6 +383,7 @@ display: none;
 <ul>
 <li><a href="#c1" id="toc-c1">C1</a></li>
 <li><a href="#c2" id="toc-c2">C2</a></li>
+<li><a href="#c3" id="toc-c3">C3</a></li>
 </ul></li>
 </ul>
 </div>
@@ -862,6 +863,49 @@ ms</code></pre>
 français. Le régime est recodé, et les 7 espèces sans régime restent
 <code>NA</code>, car <code>case_when()</code> renvoie <code>NA</code>
 quand aucune condition n’est vraie.</p>
+</div>
+<div id="c3" class="section level2">
+<h2>C3</h2>
+<pre class="r"><code>ms |&gt;
+  filter(sommeil &gt; 15) |&gt;
+  arrange(desc(sommeil)) |&gt;
+  select(nom, regime, sommeil, poids)</code></pre>
+<pre><code>## # A tibble: 12 × 4
+##    nom                            regime      sommeil   poids
+##    &lt;chr&gt;                          &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Little brown bat               insectivore    19.9   0.01 
+##  2 Big brown bat                  insectivore    19.7   0.023
+##  3 Thick-tailed opposum           carnivore      19.4   0.37 
+##  4 Giant armadillo                insectivore    18.1  60    
+##  5 North American Opossum         omnivore       18     1.7  
+##  6 Long-nosed armadillo           carnivore      17.4   3.5  
+##  7 Owl monkey                     omnivore       17     0.48 
+##  8 Arctic ground squirrel         herbivore      16.6   0.92 
+##  9 Golden-mantled ground squirrel herbivore      15.9   0.205
+## 10 Tiger                          carnivore      15.8 163.   
+## 11 Eastern american chipmunk      herbivore      15.8   0.112
+## 12 Tenrec                         omnivore       15.6   0.9</code></pre>
+<pre class="r"><code>ms |&gt;
+  filter(sommeil &lt; 4) |&gt;
+  arrange(sommeil) |&gt;
+  select(nom, regime, sommeil, poids)</code></pre>
+<pre><code>## # A tibble: 9 × 4
+##   nom              regime    sommeil  poids
+##   &lt;chr&gt;            &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Giraffe          herbivore     1.9  900. 
+## 2 Pilot whale      carnivore     2.7  800  
+## 3 Horse            herbivore     2.9  521  
+## 4 Roe deer         herbivore     3     14.8
+## 5 Donkey           herbivore     3.1  187  
+## 6 African elephant herbivore     3.3 6654  
+## 7 Caspian seal     carnivore     3.5   86  
+## 8 Sheep            herbivore     3.8   55.5
+## 9 Asian elephant   herbivore     3.9 2547</code></pre>
+<p>12 espèces dorment plus de 15 h par jour, et 9 moins de 4 h. Les
+grands dormeurs sont surtout de petits animaux (chauves-souris,
+opossums, écureuils), aux régimes variés. Les petits dormeurs sont
+presque tous de gros herbivores (girafe, cheval, éléphants…), sauf deux
+carnivores marins (globicéphale et phoque).</p>
 </div>
 </div>
 
