@@ -1,0 +1,15 @@
+---
+title: "tp3_pierron_remi"
+output: html_document
+date: "2026-11-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source("donnees_tp3.R")
+```
+
+## Partie A
+
+
