@@ -80,3 +80,11 @@ promo[is.na(promo$moyenne), c("prenom", "note_r", "note_stat")]
 ```
 
 `r sum(is.na(promo$moyenne))` étudiants n'ont pas de moyenne (Gaël, sans note de statistique, et Hugo, sans note de R) : un `NA` se propage dans tout calcul qui l'utilise.
+
+## A4
+
+```{r a4}
+promo[which(promo$age >= 25 & promo$moyenne >= 12), c("prenom", "age", "moyenne")]
+```
+
+Seuls Elias et Inès ont 25 ans ou plus et au moins 12 de moyenne. `which()` écarte les lignes où la condition vaut `NA` (âge ou moyenne manquants), qui sinon apparaîtraient comme des lignes vides.

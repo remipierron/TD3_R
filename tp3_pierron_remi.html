@@ -363,6 +363,7 @@ display: none;
 <li><a href="#a1" id="toc-a1">A1</a></li>
 <li><a href="#a2" id="toc-a2">A2</a></li>
 <li><a href="#a3" id="toc-a3">A3</a></li>
+<li><a href="#a4" id="toc-a4">A4</a></li>
 </ul></li>
 </ul>
 </div>
@@ -533,6 +534,17 @@ promo</code></pre>
 <p>2 étudiants n’ont pas de moyenne (Gaël, sans note de statistique, et
 Hugo, sans note de R) : un <code>NA</code> se propage dans tout calcul
 qui l’utilise.</p>
+</div>
+<div id="a4" class="section level2">
+<h2>A4</h2>
+<pre class="r"><code>promo[which(promo$age &gt;= 25 &amp; promo$moyenne &gt;= 12), c(&quot;prenom&quot;, &quot;age&quot;, &quot;moyenne&quot;)]</code></pre>
+<pre><code>##   prenom age moyenne
+## 5  Elias  28   12.67
+## 9   Inès  27   16.50</code></pre>
+<p>Seuls Elias et Inès ont 25 ans ou plus et au moins 12 de moyenne.
+<code>which()</code> écarte les lignes où la condition vaut
+<code>NA</code> (âge ou moyenne manquants), qui sinon apparaîtraient
+comme des lignes vides.</p>
 </div>
 </div>
 
