@@ -88,3 +88,13 @@ promo[which(promo$age >= 25 & promo$moyenne >= 12), c("prenom", "age", "moyenne"
 ```
 
 Seuls Elias et Inès ont 25 ans ou plus et au moins 12 de moyenne. `which()` écarte les lignes où la condition vaut `NA` (âge ou moyenne manquants), qui sinon apparaîtraient comme des lignes vides.
+
+## A5
+
+```{r a5}
+promo_tri <- promo[order(promo$moyenne, decreasing = TRUE), ]
+promo_tri
+head(promo_tri[, c("prenom", "moyenne")], 3)
+```
+
+Les étudiants sans moyenne (Gaël et Hugo) apparaissent à la fin du tableau : `order()` place les `NA` en dernier par défaut. Le podium est Inès (16,5), Chen (16,33) et Awa (13,67).

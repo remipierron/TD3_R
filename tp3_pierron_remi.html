@@ -364,6 +364,7 @@ display: none;
 <li><a href="#a2" id="toc-a2">A2</a></li>
 <li><a href="#a3" id="toc-a3">A3</a></li>
 <li><a href="#a4" id="toc-a4">A4</a></li>
+<li><a href="#a5" id="toc-a5">A5</a></li>
 </ul></li>
 </ul>
 </div>
@@ -545,6 +546,30 @@ qui l’utilise.</p>
 <code>which()</code> écarte les lignes où la condition vaut
 <code>NA</code> (âge ou moyenne manquants), qui sinon apparaîtraient
 comme des lignes vides.</p>
+</div>
+<div id="a5" class="section level2">
+<h2>A5</h2>
+<pre class="r"><code>promo_tri &lt;- promo[order(promo$moyenne, decreasing = TRUE), ]
+promo_tri</code></pre>
+<pre><code>##    prenom age filiere note_r note_stat moyenne
+## 9    Inès  27    info   16.0      17.5   16.50
+## 3    Chen  22    info   17.0      15.0   16.33
+## 1     Awa  24    info   14.5      12.0   13.67
+## 5   Elias  28    stat   12.0      14.0   12.67
+## 10   Jade  41     eco   10.0      12.5   10.83
+## 4    Dina  45     eco   11.5       9.0   10.67
+## 2   Bruno  31    stat    9.0      13.5   10.50
+## 6   Fatou  NA     eco    8.5      11.0    9.33
+## 7    Gaël  35    info   15.0        NA      NA
+## 8    Hugo  19    stat     NA      10.5      NA</code></pre>
+<pre class="r"><code>head(promo_tri[, c(&quot;prenom&quot;, &quot;moyenne&quot;)], 3)</code></pre>
+<pre><code>##   prenom moyenne
+## 9   Inès   16.50
+## 3   Chen   16.33
+## 1    Awa   13.67</code></pre>
+<p>Les étudiants sans moyenne (Gaël et Hugo) apparaissent à la fin du
+tableau : <code>order()</code> place les <code>NA</code> en dernier par
+défaut. Le podium est Inès (16,5), Chen (16,33) et Awa (13,67).</p>
 </div>
 </div>
 
