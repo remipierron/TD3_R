@@ -416,3 +416,19 @@ cmd |> select(prix_total, cout_total, marge, taux_marge, delai, annee)
 ```
 
 Les cinq colonnes sont ajoutées à `cmd`. Le coût total multiplie le coût unitaire par la quantité, car `prix_total` porte déjà sur toute la ligne.
+
+## D4
+
+```{r d4}
+canaux <- cmd |>
+  group_by(canal) |>
+  summarise(n_lignes       = n(),
+            n_commandes    = n_distinct(commande),
+            ca             = sum(prix_total),
+            marge_totale   = sum(marge),
+            taux_marge     = round(100 * marge_totale / ca, 1),
+            delai_moyen    = round(mean(delai), 1))
+canaux
+```
+
+Le taux de marge global est calculé comme marge totale / CA total, et non comme la moyenne des taux par ligne. Le canal le plus rentable est le `r canaux$canal[which.max(canaux$taux_marge)]` (taux de marge de `r max(canaux$taux_marge)` %), mais les écarts entre canaux sont faibles (moins de 1,5 point), et c'est le magasin qui rapporte la plus grosse marge totale grâce à son volume. Le magasin est de loin le plus rapide (`r min(canaux$delai_moyen)` jour de délai en moyenne, contre plus de 3 jours pour les deux autres canaux).

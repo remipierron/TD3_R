@@ -396,6 +396,7 @@ display: none;
 <li><a href="#d1" id="toc-d1">D1</a></li>
 <li><a href="#d2" id="toc-d2">D2</a></li>
 <li><a href="#d3" id="toc-d3">D3</a></li>
+<li><a href="#d4" id="toc-d4">D4</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1163,6 +1164,31 @@ cmd |&gt; select(prix_total, cout_total, marge, taux_marge, delai, annee)</code>
 <p>Les cinq colonnes sont ajoutées à <code>cmd</code>. Le coût total
 multiplie le coût unitaire par la quantité, car <code>prix_total</code>
 porte déjà sur toute la ligne.</p>
+</div>
+<div id="d4" class="section level2">
+<h2>D4</h2>
+<pre class="r"><code>canaux &lt;- cmd |&gt;
+  group_by(canal) |&gt;
+  summarise(n_lignes       = n(),
+            n_commandes    = n_distinct(commande),
+            ca             = sum(prix_total),
+            marge_totale   = sum(marge),
+            taux_marge     = round(100 * marge_totale / ca, 1),
+            delai_moyen    = round(mean(delai), 1))
+canaux</code></pre>
+<pre><code>## # A tibble: 3 × 7
+##   canal     n_lignes n_commandes     ca marge_totale taux_marge delai_moyen
+##   &lt;fct&gt;        &lt;int&gt;       &lt;int&gt;  &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;
+## 1 magasin        324         260 44655.       23984.       53.7         0.2
+## 2 catalogue      170         132 33931.       18601.       54.8         3.3
+## 3 internet       123          98 21492.       11583.       53.9         3.6</code></pre>
+<p>Le taux de marge global est calculé comme marge totale / CA total, et
+non comme la moyenne des taux par ligne. Le canal le plus rentable est
+le catalogue (taux de marge de 54.8 %), mais les écarts entre canaux
+sont faibles (moins de 1,5 point), et c’est le magasin qui rapporte la
+plus grosse marge totale grâce à son volume. Le magasin est de loin le
+plus rapide (0.2 jour de délai en moyenne, contre plus de 3 jours pour
+les deux autres canaux).</p>
 </div>
 </div>
 
