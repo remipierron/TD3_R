@@ -375,6 +375,7 @@ display: none;
 <li><a href="#b3" id="toc-b3">B3</a></li>
 <li><a href="#b4" id="toc-b4">B4</a></li>
 <li><a href="#b5" id="toc-b5">B5</a></li>
+<li><a href="#b6" id="toc-b6">B6</a></li>
 </ul></li>
 </ul>
 </div>
@@ -724,6 +725,22 @@ ozone_mois</code></pre>
 <p>L’ozone est nettement plus élevé en juillet et en août (environ 60
 ppb en moyenne) qu’en mai, en juin et en septembre. En juin, il n’est
 mesuré que 9 jours sur 30.</p>
+</div>
+<div id="b6" class="section level2">
+<h2>B6</h2>
+<pre class="r"><code>aq_tri &lt;- aq[order(aq$Month, -aq$Temp, aq$Day), ]
+aq_tri[!duplicated(aq_tri$Month), c(&quot;Mois&quot;, &quot;Day&quot;, &quot;TempC&quot;)]</code></pre>
+<pre><code>##          Mois Day TempC
+## 29        mai  29  27.2
+## 42       juin  11  33.9
+## 69    juillet   8  33.3
+## 120      août  28  36.1
+## 126 septembre   3  33.9</code></pre>
+<p>On trie par mois, puis par température décroissante, puis par jour
+croissant, et <code>!duplicated()</code> garde la première ligne de
+chaque mois. En cas d’égalité, c’est donc bien le premier jour du mois
+qui est retenu (c’est le cas en juillet et en septembre). Le jour le
+plus chaud de l’été est le 28 août (36,1 °C).</p>
 </div>
 </div>
 

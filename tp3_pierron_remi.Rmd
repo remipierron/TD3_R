@@ -189,3 +189,12 @@ ozone_mois
 ```
 
 L'ozone est nettement plus élevé en juillet et en août (environ 60 ppb en moyenne) qu'en mai, en juin et en septembre. En juin, il n'est mesuré que 9 jours sur 30.
+
+## B6
+
+```{r b6}
+aq_tri <- aq[order(aq$Month, -aq$Temp, aq$Day), ]
+aq_tri[!duplicated(aq_tri$Month), c("Mois", "Day", "TempC")]
+```
+
+On trie par mois, puis par température décroissante, puis par jour croissant, et `!duplicated()` garde la première ligne de chaque mois. En cas d'égalité, c'est donc bien le premier jour du mois qui est retenu (c'est le cas en juillet et en septembre). Le jour le plus chaud de l'été est le 28 août (36,1 °C).
