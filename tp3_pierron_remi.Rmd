@@ -306,3 +306,15 @@ sommeil_regime
 ```
 
 Les insectivores dorment le plus en moyenne (14,9 h), devant les omnivores, les carnivores et les herbivores (9,5 h). Les écarts-types sont élevés : à l'intérieur d'un même régime, le sommeil varie beaucoup.
+
+## C6
+
+```{r c6}
+ms |>
+  group_by(classe_poids) |>
+  summarise(n_especes     = n(),
+            sommeil_moyen = round(mean(sommeil), 1),
+            part_rem_moy  = round(mean(part_rem, na.rm = TRUE), 1))
+```
+
+Plus un animal est lourd, moins il dort : le sommeil moyen passe de 12,8 h pour les moins de 1 kg à 5,9 h pour les 100 kg et plus. La part de sommeil paradoxal ne suit pas de tendance nette : elle reste entre 15 et 19 % quelle que soit la classe de poids.

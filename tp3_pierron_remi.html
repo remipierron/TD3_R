@@ -386,6 +386,7 @@ display: none;
 <li><a href="#c3" id="toc-c3">C3</a></li>
 <li><a href="#c4" id="toc-c4">C4</a></li>
 <li><a href="#c5" id="toc-c5">C5</a></li>
+<li><a href="#c6" id="toc-c6">C6</a></li>
 </ul></li>
 </ul>
 </div>
@@ -970,6 +971,25 @@ sommeil_regime</code></pre>
 omnivores, les carnivores et les herbivores (9,5 h). Les écarts-types
 sont élevés : à l’intérieur d’un même régime, le sommeil varie
 beaucoup.</p>
+</div>
+<div id="c6" class="section level2">
+<h2>C6</h2>
+<pre class="r"><code>ms |&gt;
+  group_by(classe_poids) |&gt;
+  summarise(n_especes     = n(),
+            sommeil_moyen = round(mean(sommeil), 1),
+            part_rem_moy  = round(mean(part_rem, na.rm = TRUE), 1))</code></pre>
+<pre><code>## # A tibble: 4 × 4
+##   classe_poids   n_especes sommeil_moyen part_rem_moy
+##   &lt;ord&gt;              &lt;int&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+## 1 &lt; 1 kg                35          12.8         18.1
+## 2 1-10 kg               21          10.7         15.6
+## 3 10-100 kg             15           8.2         18.9
+## 4 100 kg et plus        12           5.9         16.4</code></pre>
+<p>Plus un animal est lourd, moins il dort : le sommeil moyen passe de
+12,8 h pour les moins de 1 kg à 5,9 h pour les 100 kg et plus. La part
+de sommeil paradoxal ne suit pas de tendance nette : elle reste entre 15
+et 19 % quelle que soit la classe de poids.</p>
 </div>
 </div>
 
