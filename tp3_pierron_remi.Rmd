@@ -481,3 +481,19 @@ par_commande |>
 ```
 
 Le panier moyen est le plus élevé sur catalogue (environ 257 €), devant internet (219 €) et le magasin (172 €). Le nombre moyen d'articles par commande est presque le même partout (environ 1,3) : la différence de panier vient donc du prix des articles achetés, et non de leur nombre.
+
+## D8
+
+```{r d8}
+sum(cmd$delai < 0)
+
+pertes <- cmd |>
+  filter(marge < 0) |>
+  group_by(canal) |>
+  summarise(n_lignes = n(), perte = round(sum(marge), 2))
+pertes
+
+cmd |> filter(marge < 0) |> select(date_cmd, canal, produit, quantite, prix_total, cout_total, marge)
+```
+
+Aucune ligne n'a de délai de livraison négatif. Une seule ligne est vendue à perte, en magasin, pour une perte de `r abs(sum(pertes$perte))` € : c'est négligeable par rapport à la marge totale.
