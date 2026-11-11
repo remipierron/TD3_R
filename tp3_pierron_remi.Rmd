@@ -69,3 +69,14 @@ class(promo$ag); length(promo$ag)
 - **`promo$ag` renvoie le vecteur `age`.** Il n'existe pas de colonne `ag`, mais sur un data.frame, `$` fait une **correspondance partielle** : `ag` est complété silencieusement en `age`, la seule colonne qui commence ainsi. Le cours oppose ce comportement à celui d'un tibble, qui renvoie `NULL` avec un avertissement. Ce comportement est piégeux et il faut toujours écrire le nom complet.
 
 On retiendra que `promo[, 2]`, `promo[[2]]` et `promo$age` donnent un vecteur, alors que `promo[2]` et `promo[, 2, drop = FALSE]` donnent un data frame.
+
+## A3
+
+```{r a3}
+promo$moyenne <- round((2 * promo$note_r + promo$note_stat) / 3, 2)
+promo
+sum(is.na(promo$moyenne))
+promo[is.na(promo$moyenne), c("prenom", "note_r", "note_stat")]
+```
+
+`r sum(is.na(promo$moyenne))` étudiants n'ont pas de moyenne (Gaël, sans note de statistique, et Hugo, sans note de R) : un `NA` se propage dans tout calcul qui l'utilise.

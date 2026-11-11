@@ -362,6 +362,7 @@ display: none;
 <ul>
 <li><a href="#a1" id="toc-a1">A1</a></li>
 <li><a href="#a2" id="toc-a2">A2</a></li>
+<li><a href="#a3" id="toc-a3">A3</a></li>
 </ul></li>
 </ul>
 </div>
@@ -507,6 +508,31 @@ le nom complet.</li>
 <code>promo$age</code> donnent un vecteur, alors que
 <code>promo[2]</code> et <code>promo[, 2, drop = FALSE]</code> donnent
 un data frame.</p>
+</div>
+<div id="a3" class="section level2">
+<h2>A3</h2>
+<pre class="r"><code>promo$moyenne &lt;- round((2 * promo$note_r + promo$note_stat) / 3, 2)
+promo</code></pre>
+<pre><code>##    prenom age filiere note_r note_stat moyenne
+## 1     Awa  24    info   14.5      12.0   13.67
+## 2   Bruno  31    stat    9.0      13.5   10.50
+## 3    Chen  22    info   17.0      15.0   16.33
+## 4    Dina  45     eco   11.5       9.0   10.67
+## 5   Elias  28    stat   12.0      14.0   12.67
+## 6   Fatou  NA     eco    8.5      11.0    9.33
+## 7    Gaël  35    info   15.0        NA      NA
+## 8    Hugo  19    stat     NA      10.5      NA
+## 9    Inès  27    info   16.0      17.5   16.50
+## 10   Jade  41     eco   10.0      12.5   10.83</code></pre>
+<pre class="r"><code>sum(is.na(promo$moyenne))</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>promo[is.na(promo$moyenne), c(&quot;prenom&quot;, &quot;note_r&quot;, &quot;note_stat&quot;)]</code></pre>
+<pre><code>##   prenom note_r note_stat
+## 7   Gaël     15        NA
+## 8   Hugo     NA      10.5</code></pre>
+<p>2 étudiants n’ont pas de moyenne (Gaël, sans note de statistique, et
+Hugo, sans note de R) : un <code>NA</code> se propage dans tout calcul
+qui l’utilise.</p>
 </div>
 </div>
 
