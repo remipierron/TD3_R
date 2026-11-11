@@ -432,3 +432,19 @@ canaux
 ```
 
 Le taux de marge global est calculé comme marge totale / CA total, et non comme la moyenne des taux par ligne. Le canal le plus rentable est le `r canaux$canal[which.max(canaux$taux_marge)]` (taux de marge de `r max(canaux$taux_marge)` %), mais les écarts entre canaux sont faibles (moins de 1,5 point), et c'est le magasin qui rapporte la plus grosse marge totale grâce à son volume. Le magasin est de loin le plus rapide (`r min(canaux$delai_moyen)` jour de délai en moyenne, contre plus de 3 jours pour les deux autres canaux).
+
+## D5
+
+```{r d5}
+ca_annee <- cmd |>
+  group_by(annee, canal) |>
+  summarise(ca = sum(prix_total), .groups = "drop") |>
+  group_by(annee) |>
+  mutate(part = round(100 * ca / sum(ca), 1)) |>
+  ungroup()
+ca_annee
+
+ca_annee |> filter(canal == "internet")
+```
+
+La part d'internet n'augmente pas régulièrement. Elle passe de 18,1 % en 2003 à 27,5 % en 2005, chute à 12,8 % en 2006, puis atteint son maximum en 2007 (28,9 %). La tendance est plutôt à la hausse, mais avec de fortes variations d'une année sur l'autre.

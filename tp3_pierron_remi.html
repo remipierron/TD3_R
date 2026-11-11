@@ -397,6 +397,7 @@ display: none;
 <li><a href="#d2" id="toc-d2">D2</a></li>
 <li><a href="#d3" id="toc-d3">D3</a></li>
 <li><a href="#d4" id="toc-d4">D4</a></li>
+<li><a href="#d5" id="toc-d5">D5</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1189,6 +1190,47 @@ sont faibles (moins de 1,5 point), et c’est le magasin qui rapporte la
 plus grosse marge totale grâce à son volume. Le magasin est de loin le
 plus rapide (0.2 jour de délai en moyenne, contre plus de 3 jours pour
 les deux autres canaux).</p>
+</div>
+<div id="d5" class="section level2">
+<h2>D5</h2>
+<pre class="r"><code>ca_annee &lt;- cmd |&gt;
+  group_by(annee, canal) |&gt;
+  summarise(ca = sum(prix_total), .groups = &quot;drop&quot;) |&gt;
+  group_by(annee) |&gt;
+  mutate(part = round(100 * ca / sum(ca), 1)) |&gt;
+  ungroup()
+ca_annee</code></pre>
+<pre><code>## # A tibble: 15 × 4
+##    annee canal         ca  part
+##    &lt;chr&gt; &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt;
+##  1 2003  magasin    7939.  34.9
+##  2 2003  catalogue 10668.  46.9
+##  3 2003  internet   4124.  18.1
+##  4 2004  magasin    9012.  57.1
+##  5 2004  catalogue  3495.  22.1
+##  6 2004  internet   3276.  20.8
+##  7 2005  magasin    5651.  33.5
+##  8 2005  catalogue  6570.  39  
+##  9 2005  internet   4626.  27.5
+## 10 2006  magasin   11194.  52.3
+## 11 2006  catalogue  7479.  34.9
+## 12 2006  internet   2734.  12.8
+## 13 2007  magasin   10858.  46.6
+## 14 2007  catalogue  5719.  24.5
+## 15 2007  internet   6731   28.9</code></pre>
+<pre class="r"><code>ca_annee |&gt; filter(canal == &quot;internet&quot;)</code></pre>
+<pre><code>## # A tibble: 5 × 4
+##   annee canal       ca  part
+##   &lt;chr&gt; &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1 2003  internet 4124.  18.1
+## 2 2004  internet 3276.  20.8
+## 3 2005  internet 4626.  27.5
+## 4 2006  internet 2734.  12.8
+## 5 2007  internet 6731   28.9</code></pre>
+<p>La part d’internet n’augmente pas régulièrement. Elle passe de 18,1 %
+en 2003 à 27,5 % en 2005, chute à 12,8 % en 2006, puis atteint son
+maximum en 2007 (28,9 %). La tendance est plutôt à la hausse, mais avec
+de fortes variations d’une année sur l’autre.</p>
 </div>
 </div>
 
