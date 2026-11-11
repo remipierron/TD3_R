@@ -173,3 +173,19 @@ pics[order(pics$Ozone, decreasing = TRUE), ]
 ```
 
 `r nrow(pics)` jours dépassent 100 ppb d'ozone, dont 4 en août. Le pic maximal est de 168 ppb, le 25 août. `which()` écarte les jours où l'ozone n'est pas mesuré, ce qui évite les lignes `NA`.
+
+## B5
+
+```{r b5}
+ozone_mois <- data.frame(
+  mois      = levels(aq$Mois),
+  n_mesures = tapply(!is.na(aq$Ozone), aq$Mois, sum),
+  moyenne   = round(tapply(aq$Ozone, aq$Mois, mean, na.rm = TRUE), 1),
+  mediane   = tapply(aq$Ozone, aq$Mois, median, na.rm = TRUE),
+  maximum   = tapply(aq$Ozone, aq$Mois, max, na.rm = TRUE),
+  row.names = NULL
+)
+ozone_mois
+```
+
+L'ozone est nettement plus élevé en juillet et en août (environ 60 ppb en moyenne) qu'en mai, en juin et en septembre. En juin, il n'est mesuré que 9 jours sur 30.

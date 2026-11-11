@@ -374,6 +374,7 @@ display: none;
 <li><a href="#b2" id="toc-b2">B2</a></li>
 <li><a href="#b3" id="toc-b3">B3</a></li>
 <li><a href="#b4" id="toc-b4">B4</a></li>
+<li><a href="#b5" id="toc-b5">B5</a></li>
 </ul></li>
 </ul>
 </div>
@@ -702,6 +703,27 @@ pics[order(pics$Ozone, decreasing = TRUE), ]</code></pre>
 <p>7 jours dépassent 100 ppb d’ozone, dont 4 en août. Le pic maximal est
 de 168 ppb, le 25 août. <code>which()</code> écarte les jours où l’ozone
 n’est pas mesuré, ce qui évite les lignes <code>NA</code>.</p>
+</div>
+<div id="b5" class="section level2">
+<h2>B5</h2>
+<pre class="r"><code>ozone_mois &lt;- data.frame(
+  mois      = levels(aq$Mois),
+  n_mesures = tapply(!is.na(aq$Ozone), aq$Mois, sum),
+  moyenne   = round(tapply(aq$Ozone, aq$Mois, mean, na.rm = TRUE), 1),
+  mediane   = tapply(aq$Ozone, aq$Mois, median, na.rm = TRUE),
+  maximum   = tapply(aq$Ozone, aq$Mois, max, na.rm = TRUE),
+  row.names = NULL
+)
+ozone_mois</code></pre>
+<pre><code>##        mois n_mesures moyenne mediane maximum
+## 1       mai        26    23.6      18     115
+## 2      juin         9    29.4      23      71
+## 3   juillet        26    59.1      60     135
+## 4      août        26    60.0      52     168
+## 5 septembre        29    31.4      23      96</code></pre>
+<p>L’ozone est nettement plus élevé en juillet et en août (environ 60
+ppb en moyenne) qu’en mai, en juin et en septembre. En juin, il n’est
+mesuré que 9 jours sur 30.</p>
 </div>
 </div>
 
