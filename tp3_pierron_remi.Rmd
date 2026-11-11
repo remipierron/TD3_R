@@ -13,6 +13,8 @@ library(tidyverse)
 source("donnees_tp3.R")
 ```
 
+**Dépôt GitHub du TP :** <https://github.com/remipierron/TD3_R>
+
 # Partie A
 
 ## A1
