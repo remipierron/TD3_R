@@ -318,3 +318,14 @@ ms |>
 ```
 
 Plus un animal est lourd, moins il dort : le sommeil moyen passe de 12,8 h pour les moins de 1 kg à 5,9 h pour les 100 kg et plus. La part de sommeil paradoxal ne suit pas de tendance nette : elle reste entre 15 et 19 % quelle que soit la classe de poids.
+
+## C7
+
+```{r c7}
+ms |>
+  filter(!is.na(regime)) |>
+  slice_max(sommeil, n = 1, by = regime) |>
+  select(regime, nom, sommeil)
+```
+
+Le meilleur dormeur est la petite chauve-souris brune (Little brown bat, 19,9 h) chez les insectivores, l'opossum à queue épaisse (Thick-tailed opposum, 19,4 h) chez les carnivores, l'opossum d'Amérique du Nord (18 h) chez les omnivores et le spermophile arctique (Arctic ground squirrel, 16,6 h) chez les herbivores.

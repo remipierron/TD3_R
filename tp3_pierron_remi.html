@@ -387,6 +387,7 @@ display: none;
 <li><a href="#c4" id="toc-c4">C4</a></li>
 <li><a href="#c5" id="toc-c5">C5</a></li>
 <li><a href="#c6" id="toc-c6">C6</a></li>
+<li><a href="#c7" id="toc-c7">C7</a></li>
 </ul></li>
 </ul>
 </div>
@@ -990,6 +991,25 @@ beaucoup.</p>
 12,8 h pour les moins de 1 kg à 5,9 h pour les 100 kg et plus. La part
 de sommeil paradoxal ne suit pas de tendance nette : elle reste entre 15
 et 19 % quelle que soit la classe de poids.</p>
+</div>
+<div id="c7" class="section level2">
+<h2>C7</h2>
+<pre class="r"><code>ms |&gt;
+  filter(!is.na(regime)) |&gt;
+  slice_max(sommeil, n = 1, by = regime) |&gt;
+  select(regime, nom, sommeil)</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   regime      nom                    sommeil
+##   &lt;chr&gt;       &lt;chr&gt;                    &lt;dbl&gt;
+## 1 carnivore   Thick-tailed opposum      19.4
+## 2 omnivore    North American Opossum    18  
+## 3 herbivore   Arctic ground squirrel    16.6
+## 4 insectivore Little brown bat          19.9</code></pre>
+<p>Le meilleur dormeur est la petite chauve-souris brune (Little brown
+bat, 19,9 h) chez les insectivores, l’opossum à queue épaisse
+(Thick-tailed opposum, 19,4 h) chez les carnivores, l’opossum d’Amérique
+du Nord (18 h) chez les omnivores et le spermophile arctique (Arctic
+ground squirrel, 16,6 h) chez les herbivores.</p>
 </div>
 </div>
 
