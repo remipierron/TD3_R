@@ -373,6 +373,7 @@ display: none;
 <li><a href="#b1" id="toc-b1">B1</a></li>
 <li><a href="#b2" id="toc-b2">B2</a></li>
 <li><a href="#b3" id="toc-b3">B3</a></li>
+<li><a href="#b4" id="toc-b4">B4</a></li>
 </ul></li>
 </ul>
 </div>
@@ -685,6 +686,22 @@ facteur à 5 niveaux, de mai à septembre).</p>
 <p>34 jours ont atteint 30 °C ou plus : aucun en mai, 5 en juin, 10 en
 juillet, 14 en août et 5 en septembre. Août est le mois le plus chaud en
 moyenne (28,9 °C), de très peu devant juillet (28,8 °C).</p>
+</div>
+<div id="b4" class="section level2">
+<h2>B4</h2>
+<pre class="r"><code>pics &lt;- aq[which(aq$Ozone &gt; 100), c(&quot;Mois&quot;, &quot;Day&quot;, &quot;Ozone&quot;, &quot;TempC&quot;)]
+pics[order(pics$Ozone, decreasing = TRUE), ]</code></pre>
+<pre><code>##        Mois Day Ozone TempC
+## 117    août  25   168  27.2
+## 62  juillet   1   135  28.9
+## 99     août   7   122  31.7
+## 121    août  29   118  34.4
+## 30      mai  30   115  26.1
+## 101    août   9   110  32.2
+## 86  juillet  25   108  29.4</code></pre>
+<p>7 jours dépassent 100 ppb d’ozone, dont 4 en août. Le pic maximal est
+de 168 ppb, le 25 août. <code>which()</code> écarte les jours où l’ozone
+n’est pas mesuré, ce qui évite les lignes <code>NA</code>.</p>
 </div>
 </div>
 

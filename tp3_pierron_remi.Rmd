@@ -164,3 +164,12 @@ round(tapply(aq$TempC, aq$Mois, mean), 1)
 ```
 
 `r sum(aq$TempC >= 30)` jours ont atteint 30 °C ou plus : aucun en mai, 5 en juin, 10 en juillet, 14 en août et 5 en septembre. Août est le mois le plus chaud en moyenne (28,9 °C), de très peu devant juillet (28,8 °C).
+
+## B4
+
+```{r b4}
+pics <- aq[which(aq$Ozone > 100), c("Mois", "Day", "Ozone", "TempC")]
+pics[order(pics$Ozone, decreasing = TRUE), ]
+```
+
+`r nrow(pics)` jours dépassent 100 ppb d'ozone, dont 4 en août. Le pic maximal est de 168 ppb, le 25 août. `which()` écarte les jours où l'ozone n'est pas mesuré, ce qui évite les lignes `NA`.
