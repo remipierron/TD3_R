@@ -129,3 +129,15 @@ sum(promo$filiere == "info")                        # 5
 ```
 
 Les cinq lignes donnent maintenant le résultat attendu : 4 étudiants en info, 4 étudiants de plus de 30 ans (Bruno, Dina, Gaël, Jade), Chen et Inès au-dessus de 15 en R, et une moyenne de R de `r round(mean(promo$note_r, na.rm = TRUE), 2)`.
+
+# Partie B
+
+## B1
+
+```{r b1}
+dim(airquality)
+colSums(is.na(airquality))
+round(100 * mean(complete.cases(airquality)), 1)
+```
+
+Le tableau compte 153 jours et 6 variables. Seules `Ozone` (37 valeurs manquantes) et `Solar.R` (7) ont des `NA`. `r round(100 * mean(complete.cases(airquality)), 1)` % des jours sont complets (111 sur 153).

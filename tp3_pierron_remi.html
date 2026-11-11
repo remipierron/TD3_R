@@ -368,6 +368,10 @@ display: none;
 <li><a href="#a6" id="toc-a6">A6</a></li>
 <li><a href="#a7" id="toc-a7">A7</a></li>
 </ul></li>
+<li><a href="#partie-b" id="toc-partie-b">Partie B</a>
+<ul>
+<li><a href="#b1" id="toc-b1">B1</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -626,6 +630,22 @@ la comparaison est toujours fausse et le résultat vaut 0.</li>
 <p>Les cinq lignes donnent maintenant le résultat attendu : 4 étudiants
 en info, 4 étudiants de plus de 30 ans (Bruno, Dina, Gaël, Jade), Chen
 et Inès au-dessus de 15 en R, et une moyenne de R de 12.61.</p>
+</div>
+</div>
+<div id="partie-b" class="section level1">
+<h1>Partie B</h1>
+<div id="b1" class="section level2">
+<h2>B1</h2>
+<pre class="r"><code>dim(airquality)</code></pre>
+<pre><code>## [1] 153   6</code></pre>
+<pre class="r"><code>colSums(is.na(airquality))</code></pre>
+<pre><code>##   Ozone Solar.R    Wind    Temp   Month     Day 
+##      37       7       0       0       0       0</code></pre>
+<pre class="r"><code>round(100 * mean(complete.cases(airquality)), 1)</code></pre>
+<pre><code>## [1] 72.5</code></pre>
+<p>Le tableau compte 153 jours et 6 variables. Seules <code>Ozone</code>
+(37 valeurs manquantes) et <code>Solar.R</code> (7) ont des
+<code>NA</code>. 72.5 % des jours sont complets (111 sur 153).</p>
 </div>
 </div>
 
