@@ -395,6 +395,7 @@ display: none;
 <ul>
 <li><a href="#d1" id="toc-d1">D1</a></li>
 <li><a href="#d2" id="toc-d2">D2</a></li>
+<li><a href="#d3" id="toc-d3">D3</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1135,6 +1136,33 @@ glimpse(cmd)</code></pre>
 facteur (magasin, catalogue, internet), des dates au format
 <code>Date</code>, et 293 lignes sans vendeur passées en
 <code>NA</code>.</p>
+</div>
+<div id="d3" class="section level2">
+<h2>D3</h2>
+<pre class="r"><code>cmd &lt;- cmd |&gt;
+  mutate(cout_total = quantite * cout_unitaire,
+         marge      = prix_total - cout_total,
+         taux_marge = round(100 * marge / prix_total, 1),
+         delai      = as.numeric(date_livr - date_cmd),
+         annee      = format(date_cmd, &quot;%Y&quot;))
+cmd |&gt; select(prix_total, cout_total, marge, taux_marge, delai, annee)</code></pre>
+<pre><code>## # A tibble: 617 × 6
+##    prix_total cout_total  marge taux_marge delai annee
+##         &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+##  1       16.5       7.45   9.05       54.8     0 2003 
+##  2      248.      110.   138.         55.7     4 2003 
+##  3       28.3       8.55  19.8        69.8     2 2003 
+##  4       32        13     19          59.4     0 2003 
+##  5       63.6      26.4   37.2        58.5     0 2003 
+##  6      235.      116.   119.         50.6     1 2003 
+##  7       35.4      16.2   19.2        54.4     5 2003 
+##  8       73.8      33.7   40.1        54.3     5 2003 
+##  9      127        56     71          55.9     2 2003 
+## 10       23.2      11.1   12.1        52.2     2 2003 
+## # ℹ 607 more rows</code></pre>
+<p>Les cinq colonnes sont ajoutées à <code>cmd</code>. Le coût total
+multiplie le coût unitaire par la quantité, car <code>prix_total</code>
+porte déjà sur toute la ligne.</p>
 </div>
 </div>
 

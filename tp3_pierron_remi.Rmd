@@ -402,3 +402,17 @@ sum(is.na(cmd$vendeur))
 ```
 
 Le tibble `cmd` a des colonnes en français, un canal en facteur (magasin, catalogue, internet), des dates au format `Date`, et `r sum(is.na(cmd$vendeur))` lignes sans vendeur passées en `NA`.
+
+## D3
+
+```{r d3}
+cmd <- cmd |>
+  mutate(cout_total = quantite * cout_unitaire,
+         marge      = prix_total - cout_total,
+         taux_marge = round(100 * marge / prix_total, 1),
+         delai      = as.numeric(date_livr - date_cmd),
+         annee      = format(date_cmd, "%Y"))
+cmd |> select(prix_total, cout_total, marge, taux_marge, delai, annee)
+```
+
+Les cinq colonnes sont ajoutées à `cmd`. Le coût total multiplie le coût unitaire par la quantité, car `prix_total` porte déjà sur toute la ligne.
