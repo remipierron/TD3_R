@@ -225,3 +225,18 @@ round(comparaison, 2)
 ```
 
 Après imputation, la moyenne passe de 42,13 à 39,5 ppb et l'écart-type de 32,99 à 30,04. La moyenne baisse parce que la médiane est inférieure à la moyenne (la distribution de l'ozone est asymétrique) et que la plupart des `NA` sont en juin, un mois peu pollué. L'écart-type baisse aussi, car on ajoute 37 valeurs identiques au centre de chaque mois : l'imputation donne une fausse impression de précision et doit être utilisée avec prudence.
+
+# Partie C
+
+## C1
+
+```{r c1}
+glimpse(msleep)
+
+pct_na <- msleep |>
+  summarise(across(everything(), \(x) round(100 * mean(is.na(x)), 1)))
+pct_na
+pct_na |> select(where(\(x) x > 30))
+```
+
+Le tableau compte 83 espèces et 11 variables. Trois variables ont plus de 30 % de valeurs manquantes : `sleep_cycle` (61,4 %), `conservation` (34,9 %) et `brainwt` (32,5 %).
