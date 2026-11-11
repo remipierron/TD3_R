@@ -240,3 +240,21 @@ pct_na |> select(where(\(x) x > 30))
 ```
 
 Le tableau compte 83 espèces et 11 variables. Trois variables ont plus de 30 % de valeurs manquantes : `sleep_cycle` (61,4 %), `conservation` (34,9 %) et `brainwt` (32,5 %).
+
+## C2
+
+```{r c2}
+ms <- msleep |>
+  select(nom = name, regime = vore, ordre = order, sommeil = sleep_total,
+         sommeil_rem = sleep_rem, cerveau = brainwt, poids = bodywt) |>
+  mutate(regime = case_when(
+    regime == "carni"   ~ "carnivore",
+    regime == "herbi"   ~ "herbivore",
+    regime == "omni"    ~ "omnivore",
+    regime == "insecti" ~ "insectivore"
+  ))
+ms
+count(ms, regime)
+```
+
+Le tibble `ms` contient les 83 espèces et 7 colonnes en français. Le régime est recodé, et les 7 espèces sans régime restent `NA`, car `case_when()` renvoie `NA` quand aucune condition n'est vraie.

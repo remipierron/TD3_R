@@ -382,6 +382,7 @@ display: none;
 <li><a href="#partie-c" id="toc-partie-c">Partie C</a>
 <ul>
 <li><a href="#c1" id="toc-c1">C1</a></li>
+<li><a href="#c2" id="toc-c2">C2</a></li>
 </ul></li>
 </ul>
 </div>
@@ -821,6 +822,46 @@ pct_na</code></pre>
 <p>Le tableau compte 83 espèces et 11 variables. Trois variables ont
 plus de 30 % de valeurs manquantes : <code>sleep_cycle</code> (61,4 %),
 <code>conservation</code> (34,9 %) et <code>brainwt</code> (32,5 %).</p>
+</div>
+<div id="c2" class="section level2">
+<h2>C2</h2>
+<pre class="r"><code>ms &lt;- msleep |&gt;
+  select(nom = name, regime = vore, ordre = order, sommeil = sleep_total,
+         sommeil_rem = sleep_rem, cerveau = brainwt, poids = bodywt) |&gt;
+  mutate(regime = case_when(
+    regime == &quot;carni&quot;   ~ &quot;carnivore&quot;,
+    regime == &quot;herbi&quot;   ~ &quot;herbivore&quot;,
+    regime == &quot;omni&quot;    ~ &quot;omnivore&quot;,
+    regime == &quot;insecti&quot; ~ &quot;insectivore&quot;
+  ))
+ms</code></pre>
+<pre><code>## # A tibble: 83 × 7
+##    nom                        regime  ordre sommeil sommeil_rem  cerveau   poids
+##    &lt;chr&gt;                      &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Cheetah                    carniv… Carn…    12.1        NA   NA        50    
+##  2 Owl monkey                 omnivo… Prim…    17           1.8  0.0155    0.48 
+##  3 Mountain beaver            herbiv… Rode…    14.4         2.4 NA         1.35 
+##  4 Greater short-tailed shrew omnivo… Sori…    14.9         2.3  0.00029   0.019
+##  5 Cow                        herbiv… Arti…     4           0.7  0.423   600    
+##  6 Three-toed sloth           herbiv… Pilo…    14.4         2.2 NA         3.85 
+##  7 Northern fur seal          carniv… Carn…     8.7         1.4 NA        20.5  
+##  8 Vesper mouse               &lt;NA&gt;    Rode…     7          NA   NA         0.045
+##  9 Dog                        carniv… Carn…    10.1         2.9  0.07     14    
+## 10 Roe deer                   herbiv… Arti…     3          NA    0.0982   14.8  
+## # ℹ 73 more rows</code></pre>
+<pre class="r"><code>count(ms, regime)</code></pre>
+<pre><code>## # A tibble: 5 × 2
+##   regime          n
+##   &lt;chr&gt;       &lt;int&gt;
+## 1 carnivore      19
+## 2 herbivore      32
+## 3 insectivore     5
+## 4 omnivore       20
+## 5 &lt;NA&gt;            7</code></pre>
+<p>Le tibble <code>ms</code> contient les 83 espèces et 7 colonnes en
+français. Le régime est recodé, et les 7 espèces sans régime restent
+<code>NA</code>, car <code>case_when()</code> renvoie <code>NA</code>
+quand aucune condition n’est vraie.</p>
 </div>
 </div>
 
