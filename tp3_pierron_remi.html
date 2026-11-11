@@ -388,6 +388,7 @@ display: none;
 <li><a href="#c5" id="toc-c5">C5</a></li>
 <li><a href="#c6" id="toc-c6">C6</a></li>
 <li><a href="#c7" id="toc-c7">C7</a></li>
+<li><a href="#c8" id="toc-c8">C8</a></li>
 </ul></li>
 </ul>
 </div>
@@ -1010,6 +1011,28 @@ bat, 19,9 h) chez les insectivores, l’opossum à queue épaisse
 (Thick-tailed opposum, 19,4 h) chez les carnivores, l’opossum d’Amérique
 du Nord (18 h) chez les omnivores et le spermophile arctique (Arctic
 ground squirrel, 16,6 h) chez les herbivores.</p>
+</div>
+<div id="c8" class="section level2">
+<h2>C8</h2>
+<pre class="r"><code>ms |&gt;
+  group_by(ordre) |&gt;
+  summarise(n_especes       = n(),
+            sommeil_moyen   = round(mean(sommeil), 1),
+            cerveau_pct_med = median(cerveau_pct, na.rm = TRUE)) |&gt;
+  filter(n_especes &gt;= 5) |&gt;
+  arrange(desc(sommeil_moyen))</code></pre>
+<pre><code>## # A tibble: 5 × 4
+##   ordre        n_especes sommeil_moyen cerveau_pct_med
+##   &lt;chr&gt;            &lt;int&gt;         &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Rodentia            22          12.5           0.815
+## 2 Soricomorpha         5          11.1           1.6  
+## 3 Primates            12          10.5           2.13 
+## 4 Carnivora           12          10.1           0.78 
+## 5 Artiodactyla         6           4.5           0.32</code></pre>
+<p>Cinq ordres comptent au moins 5 espèces. Les rongeurs (Rodentia)
+dorment le plus (12,5 h en moyenne) et les artiodactyles (Artiodactyla)
+le moins (4,5 h). Les primates ont le cerveau le plus gros relativement
+à leur poids.</p>
 </div>
 </div>
 

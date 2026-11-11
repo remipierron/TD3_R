@@ -329,3 +329,17 @@ ms |>
 ```
 
 Le meilleur dormeur est la petite chauve-souris brune (Little brown bat, 19,9 h) chez les insectivores, l'opossum à queue épaisse (Thick-tailed opposum, 19,4 h) chez les carnivores, l'opossum d'Amérique du Nord (18 h) chez les omnivores et le spermophile arctique (Arctic ground squirrel, 16,6 h) chez les herbivores.
+
+## C8
+
+```{r c8}
+ms |>
+  group_by(ordre) |>
+  summarise(n_especes       = n(),
+            sommeil_moyen   = round(mean(sommeil), 1),
+            cerveau_pct_med = median(cerveau_pct, na.rm = TRUE)) |>
+  filter(n_especes >= 5) |>
+  arrange(desc(sommeil_moyen))
+```
+
+Cinq ordres comptent au moins 5 espèces. Les rongeurs (Rodentia) dorment le plus (12,5 h en moyenne) et les artiodactyles (Artiodactyla) le moins (4,5 h). Les primates ont le cerveau le plus gros relativement à leur poids.
