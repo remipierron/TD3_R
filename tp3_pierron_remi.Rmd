@@ -208,3 +208,20 @@ round(oz_chaud["TRUE"] / oz_chaud["FALSE"], 2)
 ```
 
 Les jours à 30 °C ou plus, l'ozone moyen est de `r round(oz_chaud["TRUE"], 1)` ppb, contre `r round(oz_chaud["FALSE"], 1)` ppb les autres jours, soit environ `r round(oz_chaud["TRUE"] / oz_chaud["FALSE"], 1)` fois plus. On ne peut pas pour autant conclure que la chaleur cause l'ozone : c'est une simple association, et d'autres facteurs liés aux journées chaudes (fort ensoleillement, vent faible) peuvent expliquer les deux.
+
+## B8
+
+```{r b8}
+med_mois <- tapply(aq$Ozone, aq$Mois, median, na.rm = TRUE)   # vecteur nommé par mois
+aq$Ozone_imp <- ifelse(is.na(aq$Ozone), med_mois[as.character(aq$Mois)], aq$Ozone)
+sum(is.na(aq$Ozone_imp))
+
+comparaison <- data.frame(
+  moyenne    = c(mean(aq$Ozone, na.rm = TRUE), mean(aq$Ozone_imp)),
+  ecart_type = c(sd(aq$Ozone, na.rm = TRUE), sd(aq$Ozone_imp)),
+  row.names  = c("avant", "après")
+)
+round(comparaison, 2)
+```
+
+Après imputation, la moyenne passe de 42,13 à 39,5 ppb et l'écart-type de 32,99 à 30,04. La moyenne baisse parce que la médiane est inférieure à la moyenne (la distribution de l'ozone est asymétrique) et que la plupart des `NA` sont en juin, un mois peu pollué. L'écart-type baisse aussi, car on ajoute 37 valeurs identiques au centre de chaque mois : l'imputation donne une fausse impression de précision et doit être utilisée avec prudence.

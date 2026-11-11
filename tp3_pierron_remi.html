@@ -377,6 +377,7 @@ display: none;
 <li><a href="#b5" id="toc-b5">B5</a></li>
 <li><a href="#b6" id="toc-b6">B6</a></li>
 <li><a href="#b7" id="toc-b7">B7</a></li>
+<li><a href="#b8" id="toc-b8">B8</a></li>
 </ul></li>
 </ul>
 </div>
@@ -757,6 +758,29 @@ ppb les autres jours, soit environ 2.6 fois plus. On ne peut pas pour
 autant conclure que la chaleur cause l’ozone : c’est une simple
 association, et d’autres facteurs liés aux journées chaudes (fort
 ensoleillement, vent faible) peuvent expliquer les deux.</p>
+</div>
+<div id="b8" class="section level2">
+<h2>B8</h2>
+<pre class="r"><code>med_mois &lt;- tapply(aq$Ozone, aq$Mois, median, na.rm = TRUE)   # vecteur nommé par mois
+aq$Ozone_imp &lt;- ifelse(is.na(aq$Ozone), med_mois[as.character(aq$Mois)], aq$Ozone)
+sum(is.na(aq$Ozone_imp))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>comparaison &lt;- data.frame(
+  moyenne    = c(mean(aq$Ozone, na.rm = TRUE), mean(aq$Ozone_imp)),
+  ecart_type = c(sd(aq$Ozone, na.rm = TRUE), sd(aq$Ozone_imp)),
+  row.names  = c(&quot;avant&quot;, &quot;après&quot;)
+)
+round(comparaison, 2)</code></pre>
+<pre><code>##       moyenne ecart_type
+## avant   42.13      32.99
+## après   39.50      30.04</code></pre>
+<p>Après imputation, la moyenne passe de 42,13 à 39,5 ppb et
+l’écart-type de 32,99 à 30,04. La moyenne baisse parce que la médiane
+est inférieure à la moyenne (la distribution de l’ozone est asymétrique)
+et que la plupart des <code>NA</code> sont en juin, un mois peu pollué.
+L’écart-type baisse aussi, car on ajoute 37 valeurs identiques au centre
+de chaque mois : l’imputation donne une fausse impression de précision
+et doit être utilisée avec prudence.</p>
 </div>
 </div>
 
